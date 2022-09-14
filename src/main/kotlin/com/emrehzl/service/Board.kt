@@ -35,11 +35,11 @@ class Board(
     }
 
     private fun fillDiagonalRandomly() {
-        for (grid in 0..2) {
+        for (grid in 0 until squareRoot) {
             val shuffledArray = setOfNumbers.shuffled()
-            for (i in 0 until gridSize / 3) {
-                for (j in 0 until gridSize / 3) {
-                    board[i + (grid * 3)][j + (grid * 3)] = shuffledArray[(i * 3) + j]
+            for (i in 0 until gridSize / squareRoot) {
+                for (j in 0 until gridSize / squareRoot) {
+                    board[i + (grid * squareRoot)][j + (grid * squareRoot)] = shuffledArray[(i * squareRoot) + j]
                 }
             }
         }
@@ -51,9 +51,9 @@ class Board(
 
     private fun removeItems() {
         val k = when (difficulty) {
-            Difficulty.Easy -> (gridSize * gridSize) - 34
-            Difficulty.Medium -> (gridSize * gridSize) - 28
-            Difficulty.Hard -> (gridSize * gridSize) - 26
+            Difficulty.Easy -> (gridSize * gridSize) - ((34 / DEFAULT_GRID_SIZE) * gridSize)
+            Difficulty.Medium -> (gridSize * gridSize) - ((28 / DEFAULT_GRID_SIZE) * gridSize)
+            Difficulty.Hard -> (gridSize * gridSize) - ((26 / DEFAULT_GRID_SIZE) * gridSize)
         }
 
         removeKItems(k)
@@ -119,10 +119,10 @@ class Board(
     }
 
     private fun isNumberInBox(number: Int, row: Int, column: Int): Boolean {
-        val startRow = row - row % 3
-        val startColumn = column - column % 3
-        for (i in startRow until startRow + 3) {
-            for (j in startColumn until startColumn + 3) {
+        val startRow = row - row % squareRoot
+        val startColumn = column - column % squareRoot
+        for (i in startRow until startRow + squareRoot) {
+            for (j in startColumn until startColumn + squareRoot) {
                 if (board[i][j] == number) {
                     return true
                 }
