@@ -1,0 +1,1 @@
+rootProject.name = "com.emrehzl.sudoku-app"
